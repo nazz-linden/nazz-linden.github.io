@@ -7,10 +7,20 @@
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Use the title from a page's frontmatter if it has one -->
     <title><%= current_page.data.title || "Middleman" %></title>
+    <%= stylesheet_link_tag "reset" %>
     <%= stylesheet_link_tag "site" %>
-    <%= javascript_include_tag "site" %>
   </head>
   <body>
-    <%= yield %>
+    <header>
+      <%= image_tag "logo.png", class:"logo" %>
+    </header>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <%= javascript_include_tag "site" %>
+    <%= javascript_include_tag "three.min" %>
+    <%= javascript_include_tag "360_hero" %>
   </body>
 </html>

@@ -1,0 +1,39 @@
+body {
+    font-size: 13px;
+    line-height: 18px;
+    font-family: 'HelveticaNeue', arial, helvetica, sans-serif;
+    color: #626262;
+}
+
+h1,h2,h3 { margin: .5em 0; }
+h1 {
+    font-weight: 100;
+    padding-bottom: 20px;
+    font-size: 40px;
+}
+h2 {
+    font-weight: 100;
+    font-size: 30px;
+}
+h3 {
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: normal;
+    color: #3f8671;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+header {
+  background-color: black;
+  padding: 1em;
+}
+.logo {
+  max-width: 100px;
+}
+#hero-theta {
+  height: 300px;
+  margin-bottom: 1em;
+}
+
