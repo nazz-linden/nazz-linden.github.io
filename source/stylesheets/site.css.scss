@@ -36,4 +36,12 @@ header {
   height: 300px;
   margin-bottom: 1em;
 }
-
+#survey {
+    position:fixed;
+    width:500px;
+    height:600px;
+    margin:-300px auto auto -250px;
+    top:50%;
+    left:50%;
+    text-align:center;
+}
