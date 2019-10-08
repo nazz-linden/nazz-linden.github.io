@@ -13,7 +13,9 @@
   </head>
   <body>
     <header>
-      <%= image_tag "logo.png", class:"logo" %>
+      <% link_to '/' do %>
+        <%= image_tag "logo.png", class:"logo" %>
+      <% end %>
     </header>
 
     <main>
@@ -22,6 +24,7 @@
 
     <%= javascript_include_tag "site" %>
     <%= javascript_include_tag "three.min" %>
-    <%= javascript_include_tag "360_hero" %>
+
+    <%= yield_content :js %>
   </body>
 </html>

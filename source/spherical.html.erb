@@ -1,0 +1,34 @@
+---
+title: Nazz Linden
+---
+<div id="hero-theta">
+  <%= image_tag 'spherical.jpg', style: 'display:none', id: 'spherical-img' %>
+</div>
+
+
+<div class="container">
+
+  <h1>Full bleed banner</h1>
+
+
+  HTML
+<pre><code>&lt;script src="http://nazz-linden.github.io/javascripts/three.min.js"&gt;&lt;/script&gt;
+&lt;script src="http://nazz-linden.github.io/javascripts/360_hero.js"&gt;&lt;/script&gt;
+&lt;div id='hero-theta'&gt;
+  &lt;img src='spherical.jpg' style='display:none' id='spherical-img'&gt;
+&lt;div&gt;
+</code></pre>
+
+
+  CSS
+<pre><code>#hero-theta {
+  height: 300px;
+  margin-bottom: 1em;
+}
+</code></pre>
+
+</div>
+
+<% content_for :js do %>
+<%= javascript_include_tag "360_hero" %>
+<% end %>
