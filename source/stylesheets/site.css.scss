@@ -50,7 +50,8 @@ header {
 #survey {
   position: fixed;
   bottom: -100%;
-  width: 20rem;
+  width: 40rem;
+  height: 70%;
   left: 0;
   margin-left: 1rem;
   animation-name: popin;
@@ -60,6 +61,22 @@ header {
   animation-fill-mode: forwards;
 }
 
+$modal-width: 600px;
+.mcx-modal, .smcx-widget, .smcx-modal-content {
+  height: $modal-width !important;
+  margin-top: 2em;
+}
+.smcx-modal-content {
+  margin-top: 1.5em !important;
+  height: $modal-width - 35 !important;
+}
+.smcx-modal-header {
+  display:none;
+}
+
+.survey-page-body {
+  padding: 1em !important;
+}
 
 // code
 
