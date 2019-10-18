@@ -40,9 +40,10 @@ title: Nazz Linden
 
 <% content_for :js do %>
     <script>
-      function GaSurvey(){
-        this.cookieName = 'ga-survey';
-        this.maxViews = 3; 
+      function GaSurvey(pollName){
+        this.pollName = pollName;
+        this.cookieName = 'ga-survey-' + pollName;
+        this.maxViews = 300; 
       }
 
       GaSurvey.prototype.init = function() {
@@ -81,6 +82,9 @@ title: Nazz Linden
         var date = new Date();
         date.setTime(date.getTime()+(daysToExpire*24*60*60*1000));
         document.cookie = this.cookieName + "=" + cookieValue + "; expires=" + date.toGMTString();
+
+        if (cookieValue==1)
+          ga('send', 'event', this.pollName, 'view', '');
       }
 
       GaSurvey.prototype.getViewCount = function() {
@@ -105,6 +109,8 @@ title: Nazz Linden
       // LOAD PAGE
       var gaSurvey = null;
       window.addEventListener('load', function () {
+
+        // ga survey
         gaSurvey = new GaSurvey();
         gaSurvey.init();
       });
