@@ -40,10 +40,12 @@ title: Nazz Linden
 
 <% content_for :js do %>
     <script>
-      function GaSurvey(pollName){
+      function GaSurvey(pollName, gaTracker){
         this.pollName = pollName;
         this.cookieName = 'ga-survey-' + pollName;
-        this.maxViews = 300; 
+        this.maxViews = 300;
+        this.gaTracker = gaTracker;
+        this.debug = false;
       }
 
       GaSurvey.prototype.init = function() {
@@ -60,6 +62,7 @@ title: Nazz Linden
       }
 
       GaSurvey.prototype.onSurveySubmit = function() {
+
         // collect selected form values
         this.kvpairs = [];
         var form = this.getForm();
@@ -70,21 +73,27 @@ title: Nazz Linden
         }
 
         // console log
-        for (var i=0; this.kvpairs.length; i++)
-          console.log(this.kvpairs[i]);
+        for (var i=0; i < this.kvpairs.length; i++)
+        {
+          kvpair = this.kvpairs[i];
+          this.gaTracker.send('event', this.pollName, 'submit', kvpair.join(': '));
+
+          if (this.debug)
+            console.log("[" + this.pollName+ "]  - " + kvpair.join(': '));
+        }
       }
 
       GaSurvey.prototype.incrementViewCount = function() {
         var cookieValue = this.getViewCount() + 1;
         daysToExpire = 10;
-        
+
         // set cookie
         var date = new Date();
         date.setTime(date.getTime()+(daysToExpire*24*60*60*1000));
         document.cookie = this.cookieName + "=" + cookieValue + "; expires=" + date.toGMTString();
 
         if (cookieValue==1)
-          ga('send', 'event', this.pollName, 'view', '');
+          this.gaTracker.send('event', this.pollName, 'view', '');
       }
 
       GaSurvey.prototype.getViewCount = function() {
@@ -105,13 +114,14 @@ title: Nazz Linden
       GaSurvey.prototype.getButton = function(){ return document.getElementById("ga-survey-btn"); }
       GaSurvey.prototype.getForm = function(){ return document.getElementsByClassName('ga-survey')[0]; }
       GaSurvey.prototype.getContainer = function(){ return document.getElementById('survey-container'); }
-  
+
       // LOAD PAGE
       var gaSurvey = null;
       window.addEventListener('load', function () {
+        var gaTracker = ga.getAll()[0];
 
         // ga survey
-        gaSurvey = new GaSurvey();
+        gaSurvey = new GaSurvey('sandbox-survey', gaTracker);
         gaSurvey.init();
       });
     </script>
