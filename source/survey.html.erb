@@ -4,7 +4,7 @@ title: Nazz Linden
 <div class="container">
   <input type="button" value="reset" onclick="gaSurvey.setSurveyCookie(0);location.reload();" />
 
-  <div id="survey-container" class="survey-hidden">
+  <div id="ga-survey-container" class="ga-survey-hidden">
     <input id="ga-close-button" type="button" value="close" />
     <form action="#" class="ga-survey">
       <div>
@@ -64,7 +64,7 @@ title: Nazz Linden
           this.getCloseButton().addEventListener("click", this.onCloseClick.bind(this));
 
           // show survey
-          this.getContainer().classList.remove('survey-hidden');
+          this.getContainer().classList.remove('ga-survey-hidden');
           this.getContainer().classList.add('survey');
         }
       }
@@ -72,8 +72,8 @@ title: Nazz Linden
       GaSurvey.prototype.onCloseClick = function() {
         // closing is forever
         this.setSurveyCookie(this.maxViews);
-        this.getContainer().classList.remove('survey');
-        this.getContainer().classList.add('survey-hidden');
+        this.getContainer().classList.remove('ga-survey-show');
+        this.getContainer().classList.add('ga-survey-hidden');
       }
 
       GaSurvey.prototype.onSurveySubmit = function() {
@@ -133,7 +133,7 @@ title: Nazz Linden
       // Getters
       GaSurvey.prototype.getSubmitButton = function(){ return document.getElementById("ga-survey-btn"); }
       GaSurvey.prototype.getForm = function(){ return document.getElementsByClassName('ga-survey')[0]; }
-      GaSurvey.prototype.getContainer = function(){ return document.getElementById('survey-container'); }
+      GaSurvey.prototype.getContainer = function(){ return document.getElementById('ga-survey-container'); }
       GaSurvey.prototype.getCloseButton = function(){ return document.getElementById('ga-close-button'); }
       GaSurvey.prototype.getThankYou = function(){ return document.getElementById('ga-thank-you'); }
 

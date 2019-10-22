@@ -4,7 +4,6 @@ body {
     font-family: 'HelveticaNeue', arial, helvetica, sans-serif;
     color: #626262;
 }
-
 h1,h2,h3 { margin: .5em 0; }
 h1 {
     font-weight: 100;
@@ -32,11 +31,33 @@ header {
 .logo {
   max-width: 100px;
 }
+.red { background-color: red; }
+pre {
+  padding: 1em;
+  color: #faf6e4;
+  background-color: #122b3b;
+  code {
+    font-family: monospace;
+  }
+}
+.hero {
+  background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%), url(https://s3-us-west-2.amazonaws.com/sl-com-cms/sl-com/agni/images/SL_Homepage_Adventure_Halloween2019.jpg);
+  height: 400px;
+}
+
+/*********************************/
+// 360
+/*********************************/
 
 #hero-theta {
   height: 300px;
   margin-bottom: 1em;
 }
+
+
+/*********************************/
+// Web Monkey Survey
+/*********************************/
 
 @keyframes popin {
   0% {
@@ -46,7 +67,6 @@ header {
     bottom: 0%;
   }
 }
-
 $modal-width: 600px;
 .mcx-modal, .smcx-widget, .smcx-modal-content {
   height: $modal-width !important;
@@ -59,34 +79,19 @@ $modal-width: 600px;
 .smcx-modal-header {
   display:none;
 }
-
 .survey-page-body {
   padding: 1em !important;
 }
 
-// code
 
-pre {
-  padding: 1em;
-  color: #faf6e4;
-  background-color: #122b3b;
-  code {
-    font-family: monospace;
-  }
-}
+/*********************************/
+// GA Survey
+/*********************************/
 
-// hero
-.hero {
-  background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%), url(https://s3-us-west-2.amazonaws.com/sl-com-cms/sl-com/agni/images/SL_Homepage_Adventure_Halloween2019.jpg);
-  height: 400px;
-}
-
-// survey
-.survey-hidden {
+.ga-survey-hidden {
   display:none;
 }
-
-.survey {
+.ga-survey-show {
   position: fixed;
   bottom: -100%;
   width: 28rem;
@@ -176,4 +181,3 @@ pre {
   }
 }
 
-.red { background-color: red; }
