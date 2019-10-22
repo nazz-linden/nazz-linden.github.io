@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Nazz Linden</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150270023-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-150270023-1', { 'optimize_id': 'GTM-5M43X9W'});
+    </script>
+
+    <link href="/stylesheets/reset.css" rel="stylesheet" />
+    <link href="/stylesheets/site.css" rel="stylesheet" />
+    <script  src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+<a href="/">        <img src="/images/logo.png" class="logo" alt="Logo" />
+</a>    </header>
+
+    <main>
+      <div class="container">
+  <input type="button" value="reset" onclick="gaSurvey.setSurveyCookie(0);location.reload();" />
+
+  <div id="survey-container" class="survey-hidden">
+    <input id="ga-close-button" type="button" value="close" />
+    <form action="#" class="ga-survey">
+      <div>
+        <label>What do you like better?</label>
+        <div class="image-options">
+          <label><input type="radio" name="cats_or_dogs" value="dog"><img src="https://nazz-linden.github.io/images/dog_sml.jpg"></label>
+          <label><input type="radio" name="cats_or_dogs" value="cat"><img src="https://nazz-linden.github.io/images/cat_sml.jpg"></label>
+        </div>
+      </div>
+      <div>
+        <label>What subjects are you interested in?</label>
+        <div class="image-options">
+          <label><input type="checkbox" name="mesh" value="mesh"><img src="https://nazz-linden.github.io/images/01_mesh.png"></label>
+          <label><input type="checkbox" name="marketplace" value="marketplace"><img src="https://nazz-linden.github.io/images/01_marketplace.png"></label>
+          <label><input type="checkbox" name="profiles" value="profiles"><img src="https://nazz-linden.github.io/images/01_profiles.png"></label>
+          <label><input type="checkbox" name="dest_guide" value="dest_guide"><img src="https://nazz-linden.github.io/images/01_dest_guide.png"></label>
+        </div>
+      </div>
+      <div>
+        <label>What type of question do you prefer?</label>
+        <div class="textbox-color-options">
+          <label><input type="checkbox" name="fav_question_type" value="multiple_choice"><div>Multiple Choice</div></label>
+          <label><input type="checkbox" name="fav_question_type" value="checkbox"><div>Checkboxes</div></label>
+          <label><input type="checkbox" name="fav_question_type" value="chickens"><div>Chickens</div></label>
+          <label><input type="checkbox" name="fav_question_type" value="aliens"><div>Aliens</div></label>
+          <label><input type="checkbox" name="fav_question_type" value="what"><div>What?</div></label>
+        </div>
+      </div>
+      <div>
+        <input type="button" id="ga-survey-btn" name="submit" value="submit">
+      </div>
+    </form>
+    <div id="ga-thank-you">
+      <h1>Thank you</h1>
+      <p>We value your feedback, you are awesome!</p>
+    </div>
+  </div>
+</div>
+
+
+
+    </main>
+
+    <script src="/javascripts/site.js"></script>
+    <script src="/javascripts/three.min.js"></script>
+
+        <script>
+      function GaSurvey(pollName, gaTracker){
+        this.pollName = pollName;
+        this.cookieName = 'ga-survey-' + pollName;
+        this.maxViews = 3;
+        this.gaTracker = gaTracker;
+        this.daysToExpireCookie = 10;
+        this.debug = false;
+      }
+
+      GaSurvey.prototype.init = function() {
+        this.incrementViewCount();
+        if (this.getViewCount() <= this.maxViews)
+        {
+          // wire events
+          this.getSubmitButton().addEventListener("click", this.onSurveySubmit.bind(this));
+          this.getCloseButton().addEventListener("click", this.onCloseClick.bind(this));
+
+          // show survey
+          this.getContainer().classList.remove('survey-hidden');
+          this.getContainer().classList.add('survey');
+        }
+      }
+
+      GaSurvey.prototype.onCloseClick = function() {
+        // closing is forever
+        this.setSurveyCookie(this.maxViews);
+        this.getContainer().classList.remove('survey');
+        this.getContainer().classList.add('survey-hidden');
+      }
+
+      GaSurvey.prototype.onSurveySubmit = function() {
+
+        // collect selected form values
+        this.kvpairs = [];
+        var form = this.getForm();
+        for ( var i = 0; i < form.elements.length; i++ ) {
+          var e = form.elements[i];
+          if (e.checked)
+            this.kvpairs.push([encodeURIComponent(e.name), encodeURIComponent(e.value)]);
+        }
+
+        for (var i=0; i < this.kvpairs.length; i++)
+        {
+          kvpair = this.kvpairs[i];
+          this.gaTracker.send('event', this.pollName, 'submit', kvpair.join(': '));
+
+          if (this.debug)
+            console.log("[" + this.pollName+ "]  - " + kvpair.join(': '));
+        }
+
+        // close forever
+        this.getForm().style.display = 'none';
+        this.getThankYou().style.display = 'block';
+        this.setSurveyCookie(this.maxViews);
+      }
+
+      GaSurvey.prototype.incrementViewCount = function() {
+        var cookieValue = this.getViewCount() + 1;
+        this.setSurveyCookie(cookieValue);
+
+        if (cookieValue==1)
+          this.gaTracker.send('event', this.pollName, 'view', '');
+      }
+
+      GaSurvey.prototype.setSurveyCookie = function(cookieValue) {
+        var date = new Date();
+        date.setTime(date.getTime()+(this.daysToExpireCookie*24*60*60*1000));
+        document.cookie = this.cookieName + "=" + cookieValue + "; expires=" + date.toGMTString();
+      }
+
+      GaSurvey.prototype.getViewCount = function() {
+
+        // from cookies
+        var name = this.cookieName + "=";
+        var allCookieArray = document.cookie.split(';');
+        for(var i=0; i<allCookieArray.length; i++)
+        {
+          var temp = allCookieArray[i].trim();
+          if (temp.indexOf(name)==0)
+          return parseInt(temp.substring(name.length,temp.length));
+        }
+        return "";
+      }
+
+      // Getters
+      GaSurvey.prototype.getSubmitButton = function(){ return document.getElementById("ga-survey-btn"); }
+      GaSurvey.prototype.getForm = function(){ return document.getElementsByClassName('ga-survey')[0]; }
+      GaSurvey.prototype.getContainer = function(){ return document.getElementById('survey-container'); }
+      GaSurvey.prototype.getCloseButton = function(){ return document.getElementById('ga-close-button'); }
+      GaSurvey.prototype.getThankYou = function(){ return document.getElementById('ga-thank-you'); }
+
+      // LOAD PAGE
+      var gaSurvey = null;
+      window.addEventListener('load', function () {
+        var gaTracker = ga.getAll()[0];
+
+        // ga survey
+        gaSurvey = new GaSurvey('sandbox-survey', gaTracker);
+        gaSurvey.init();
+      });
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,157 @@
+body {
+  font-size: 13px;
+  line-height: 18px;
+  font-family: 'HelveticaNeue', arial, helvetica, sans-serif;
+  color: #626262; }
+
+h1, h2, h3 {
+  margin: .5em 0; }
+
+h1 {
+  font-weight: 100;
+  padding-bottom: 20px;
+  font-size: 40px; }
+
+h2 {
+  font-weight: 100;
+  font-size: 30px; }
+
+h3 {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: normal;
+  color: #3f8671; }
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto; }
+
+header {
+  background-color: black;
+  padding: 1em; }
+
+.logo {
+  max-width: 100px; }
+
+#hero-theta {
+  height: 300px;
+  margin-bottom: 1em; }
+
+@-webkit-keyframes popin {
+  0% {
+    bottom: -100%; }
+  100% {
+    bottom: 0%; } }
+
+@keyframes popin {
+  0% {
+    bottom: -100%; }
+  100% {
+    bottom: 0%; } }
+
+.mcx-modal, .smcx-widget, .smcx-modal-content {
+  height: 600px !important;
+  margin-top: 2em; }
+
+.smcx-modal-content {
+  margin-top: 1.5em !important;
+  height: 565px !important; }
+
+.smcx-modal-header {
+  display: none; }
+
+.survey-page-body {
+  padding: 1em !important; }
+
+pre {
+  padding: 1em;
+  color: #faf6e4;
+  background-color: #122b3b; }
+  pre code {
+    font-family: monospace; }
+
+.hero {
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.8)), color-stop(60%, rgba(0, 0, 0, 0))), url(https://s3-us-west-2.amazonaws.com/sl-com-cms/sl-com/agni/images/SL_Homepage_Adventure_Halloween2019.jpg);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%), url(https://s3-us-west-2.amazonaws.com/sl-com-cms/sl-com/agni/images/SL_Homepage_Adventure_Halloween2019.jpg);
+  height: 400px; }
+
+.survey-hidden {
+  display: none; }
+
+.survey {
+  position: fixed;
+  bottom: -100%;
+  width: 28rem;
+  height: 70%;
+  left: 0;
+  margin-left: 1rem;
+  -webkit-animation-name: popin;
+          animation-name: popin;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  overflow-y: auto;
+  padding: 2em;
+  border: 1px solid black; }
+  .survey div#ga-thank-you {
+    display: none; }
+  .survey form.ga-survey {
+    display: flex;
+    flex-direction: column; }
+    .survey form.ga-survey input[type=button] {
+      background-color: #ff7d25;
+      border: none;
+      color: white;
+      font-stretch: normal;
+      font-family: "HelveticaNeueMedium", "HelveticaNeue-Medium", "Helvetica Neue Medium", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Helvetica", "Arial", "Tahoma", "Geneva", sans-serif;
+      font-weight: 600;
+      font-stretch: normal;
+      font-weight: 500;
+      padding: 1em 2.5em;
+      font-size: 1em;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      margin-top: 2em; }
+    .survey form.ga-survey > div {
+      display: flex;
+      flex-direction: column; }
+      .survey form.ga-survey > div > label {
+        margin: 1em 0;
+        font-size: 2em;
+        color: #ff7d25; }
+      .survey form.ga-survey > div .image-options, .survey form.ga-survey > div .textbox-color-options {
+        /* HIDE RADIO */
+        /* IMAGE STYLES */
+        /* CHECKED STYLES */ }
+        .survey form.ga-survey > div .image-options label, .survey form.ga-survey > div .textbox-color-options label {
+          margin-right: 1em; }
+        .survey form.ga-survey > div .image-options [type=radio], .survey form.ga-survey > div .image-options [type=checkbox], .survey form.ga-survey > div .textbox-color-options [type=radio], .survey form.ga-survey > div .textbox-color-options [type=checkbox] {
+          position: absolute;
+          opacity: 0;
+          width: 0;
+          height: 0; }
+        .survey form.ga-survey > div .image-options [type=radio] + img, .survey form.ga-survey > div .image-options [type=checkbox] + img, .survey form.ga-survey > div .image-options [type=radio] + span, .survey form.ga-survey > div .image-options [type=checkbox] + span, .survey form.ga-survey > div .textbox-color-options [type=radio] + img, .survey form.ga-survey > div .textbox-color-options [type=checkbox] + img, .survey form.ga-survey > div .textbox-color-options [type=radio] + span, .survey form.ga-survey > div .textbox-color-options [type=checkbox] + span {
+          cursor: pointer; }
+        .survey form.ga-survey > div .image-options [type=radio]:checked + img, .survey form.ga-survey > div .image-options [type=checkbox]:checked + img, .survey form.ga-survey > div .image-options [type=radio]:checked + div, .survey form.ga-survey > div .image-options [type=checkbox]:checked + div, .survey form.ga-survey > div .textbox-color-options [type=radio]:checked + img, .survey form.ga-survey > div .textbox-color-options [type=checkbox]:checked + img, .survey form.ga-survey > div .textbox-color-options [type=radio]:checked + div, .survey form.ga-survey > div .textbox-color-options [type=checkbox]:checked + div {
+          outline: 4px solid #ff7d25; }
+    .survey form.ga-survey .textbox-color-options {
+      display: flex;
+      flex-wrap: wrap; }
+      .survey form.ga-survey .textbox-color-options > label {
+        margin-top: 10px; }
+        .survey form.ga-survey .textbox-color-options > label > div {
+          text-align: center;
+          padding: 1em 0;
+          width: 200px;
+          background-color: #eee; }
+
+.red {
+  background-color: red; }
