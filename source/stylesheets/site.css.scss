@@ -101,7 +101,9 @@ pre {
   overflow-y: auto;
   padding: 2em;
   border: 1px solid black;
-
+  div#ga-thank-you {
+    display:none;
+  }
   form.ga-survey {
     display: flex;
     flex-direction: column;
@@ -128,7 +130,7 @@ pre {
     > div {
       display: flex;
       flex-direction: column;
-      
+
       > label {
         margin: 1em 0;
         font-size: 2em;
@@ -145,7 +147,7 @@ pre {
           width: 0;
           height: 0;
         }
-        
+
         /* IMAGE STYLES */
         [type=radio] + img, [type=checkbox] + img, [type=radio] + span, [type=checkbox] + span, {
           cursor: pointer;

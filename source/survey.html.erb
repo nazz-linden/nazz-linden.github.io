@@ -2,8 +2,10 @@
 title: Nazz Linden
 ---
 <div class="container">
+  <input type="button" value="reset" onclick="gaSurvey.setSurveyCookie(0);location.reload();" />
 
   <div id="survey-container" class="survey-hidden">
+    <input id="ga-close-button" type="button" value="close" />
     <form action="#" class="ga-survey">
       <div>
         <label>What do you like better?</label>
@@ -35,6 +37,10 @@ title: Nazz Linden
         <input type="button" id="ga-survey-btn" name="submit" value="submit">
       </div>
     </form>
+    <div id="ga-thank-you">
+      <h1>Thank you</h1>
+      <p>We value your feedback, you are awesome!</p>
+    </div>
   </div>
 </div>
 
@@ -43,22 +49,31 @@ title: Nazz Linden
       function GaSurvey(pollName, gaTracker){
         this.pollName = pollName;
         this.cookieName = 'ga-survey-' + pollName;
-        this.maxViews = 300;
+        this.maxViews = 3;
         this.gaTracker = gaTracker;
+        this.daysToExpireCookie = 10;
         this.debug = false;
       }
 
       GaSurvey.prototype.init = function() {
-        // wire events
-        this.getButton().addEventListener("click", this.onSurveySubmit.bind(this));
-
-        // show or hide?
         this.incrementViewCount();
-        if (this.getViewCount() < this.maxViews)
+        if (this.getViewCount() <= this.maxViews)
         {
+          // wire events
+          this.getSubmitButton().addEventListener("click", this.onSurveySubmit.bind(this));
+          this.getCloseButton().addEventListener("click", this.onCloseClick.bind(this));
+
+          // show survey
           this.getContainer().classList.remove('survey-hidden');
           this.getContainer().classList.add('survey');
         }
+      }
+
+      GaSurvey.prototype.onCloseClick = function() {
+        // closing is forever
+        this.setSurveyCookie(this.maxViews);
+        this.getContainer().classList.remove('survey');
+        this.getContainer().classList.add('survey-hidden');
       }
 
       GaSurvey.prototype.onSurveySubmit = function() {
@@ -72,7 +87,6 @@ title: Nazz Linden
             this.kvpairs.push([encodeURIComponent(e.name), encodeURIComponent(e.value)]);
         }
 
-        // console log
         for (var i=0; i < this.kvpairs.length; i++)
         {
           kvpair = this.kvpairs[i];
@@ -81,19 +95,25 @@ title: Nazz Linden
           if (this.debug)
             console.log("[" + this.pollName+ "]  - " + kvpair.join(': '));
         }
+
+        // close forever
+        this.getForm().style.display = 'none';
+        this.getThankYou().style.display = 'block';
+        this.setSurveyCookie(this.maxViews);
       }
 
       GaSurvey.prototype.incrementViewCount = function() {
         var cookieValue = this.getViewCount() + 1;
-        daysToExpire = 10;
-
-        // set cookie
-        var date = new Date();
-        date.setTime(date.getTime()+(daysToExpire*24*60*60*1000));
-        document.cookie = this.cookieName + "=" + cookieValue + "; expires=" + date.toGMTString();
+        this.setSurveyCookie(cookieValue);
 
         if (cookieValue==1)
           this.gaTracker.send('event', this.pollName, 'view', '');
+      }
+
+      GaSurvey.prototype.setSurveyCookie = function(cookieValue) {
+        var date = new Date();
+        date.setTime(date.getTime()+(this.daysToExpireCookie*24*60*60*1000));
+        document.cookie = this.cookieName + "=" + cookieValue + "; expires=" + date.toGMTString();
       }
 
       GaSurvey.prototype.getViewCount = function() {
@@ -111,9 +131,11 @@ title: Nazz Linden
       }
 
       // Getters
-      GaSurvey.prototype.getButton = function(){ return document.getElementById("ga-survey-btn"); }
+      GaSurvey.prototype.getSubmitButton = function(){ return document.getElementById("ga-survey-btn"); }
       GaSurvey.prototype.getForm = function(){ return document.getElementsByClassName('ga-survey')[0]; }
       GaSurvey.prototype.getContainer = function(){ return document.getElementById('survey-container'); }
+      GaSurvey.prototype.getCloseButton = function(){ return document.getElementById('ga-close-button'); }
+      GaSurvey.prototype.getThankYou = function(){ return document.getElementById('ga-thank-you'); }
 
       // LOAD PAGE
       var gaSurvey = null;
