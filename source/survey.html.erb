@@ -4,9 +4,10 @@ title: Nazz Linden
 <div class="container">
   <input type="button" value="reset" onclick="gaSurvey.setSurveyCookie(0);location.reload();" />
 
+  <!-- SURVEY CODE -->
   <div id="ga-survey-container" class="ga-survey-hidden">
     <input id="ga-close-button" type="button" value="close" />
-    <form action="#" class="ga-survey">
+    <form action="#" class="ga-survey-form">
       <div>
         <label>What do you like better?</label>
         <div class="image-options">
@@ -42,15 +43,18 @@ title: Nazz Linden
       <p>We value your feedback, you are awesome!</p>
     </div>
   </div>
+  <!-- /SURVEY CODE -->
+
+
 </div>
 
 <% content_for :js do %>
     <script>
-      function GaSurvey(pollName, gaTracker){
+      function GaSurvey(pollName, dataLayer){
         this.pollName = pollName;
         this.cookieName = 'ga-survey-' + pollName;
         this.maxViews = 3;
-        this.gaTracker = gaTracker;
+        this.dataLayer = dataLayer;
         this.daysToExpireCookie = 10;
         this.debug = false;
       }
@@ -90,7 +94,13 @@ title: Nazz Linden
         for (var i=0; i < this.kvpairs.length; i++)
         {
           kvpair = this.kvpairs[i];
-          this.gaTracker.send('event', this.pollName, 'submit', kvpair.join(': '));
+          this.dataLayer.push({
+            event: 'survey-result',
+            hitType: 'event',
+            eventCategory: this.pollName,
+            eventAction: 'submit',
+            eventLabel: kvpair.join(': ')
+          });
 
           if (this.debug)
             console.log("[" + this.pollName+ "]  - " + kvpair.join(': '));
@@ -107,7 +117,13 @@ title: Nazz Linden
         this.setSurveyCookie(cookieValue);
 
         if (cookieValue==1)
-          this.gaTracker.send('event', this.pollName, 'view', '');
+          this.dataLayer.push({
+            event: 'survey-result',
+            hitType: 'event',
+            eventCategory: this.pollName,
+            eventAction: 'view',
+            eventLabel: ''
+          });
       }
 
       GaSurvey.prototype.setSurveyCookie = function(cookieValue) {
@@ -132,7 +148,7 @@ title: Nazz Linden
 
       // Getters
       GaSurvey.prototype.getSubmitButton = function(){ return document.getElementById("ga-survey-btn"); }
-      GaSurvey.prototype.getForm = function(){ return document.getElementsByClassName('ga-survey')[0]; }
+      GaSurvey.prototype.getForm = function(){ return document.getElementsByClassName('ga-survey-form')[0]; }
       GaSurvey.prototype.getContainer = function(){ return document.getElementById('ga-survey-container'); }
       GaSurvey.prototype.getCloseButton = function(){ return document.getElementById('ga-close-button'); }
       GaSurvey.prototype.getThankYou = function(){ return document.getElementById('ga-thank-you'); }
@@ -140,10 +156,10 @@ title: Nazz Linden
       // LOAD PAGE
       var gaSurvey = null;
       window.addEventListener('load', function () {
-        var gaTracker = ga.getAll()[0];
+        window.dataLayer = window.dataLayer || [];
 
         // ga survey
-        gaSurvey = new GaSurvey('sandbox-survey', gaTracker);
+        gaSurvey = new GaSurvey('sandbox-survey', window.dataLayer);
         gaSurvey.init();
       });
     </script>
